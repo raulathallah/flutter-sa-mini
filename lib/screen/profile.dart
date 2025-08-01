@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 class Profile extends StatelessWidget {
   final Employee emp;
 
-  Profile({required this.emp});
+  Profile({super.key, required this.emp});
 
   String formattedDate = DateFormat(
     'yyyy-MM-dd – kk:mm',
@@ -60,7 +60,7 @@ Widget buildProfileHeader(Employee emp) {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
+                    color: Colors.black38,
                     blurRadius: 15,
                     offset: Offset(0, 4),
                   ),
@@ -112,7 +112,7 @@ Widget buildWorkInfo(Employee emp) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           width: 140,
           child: Column(
             children: [
@@ -131,7 +131,7 @@ Widget buildWorkInfo(Employee emp) {
           margin: EdgeInsets.symmetric(horizontal: 36),
         ),
 
-        Container(
+        SizedBox(
           width: 140,
           child: Column(
             children: [
@@ -162,81 +162,101 @@ Widget buildEmployeeInfo(Employee emp) {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         Container(
-          padding: EdgeInsets.only(top: 16),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
-            spacing: 12,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('ID', style: TextStyle(color: Colors.white)),
-                  Text(
-                    emp.employeeId,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  Column(
+                    spacing: 12,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('ID', style: TextStyle(color: Colors.white)),
+                          Text(
+                            emp.employeeId,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Employment Type',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            emp.employeeType,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Joined Date',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            emp.joinDate,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Employment Type',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    emp.employeeType,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Joined Date', style: TextStyle(color: Colors.white)),
-                  Text(
-                    emp.joinDate,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Phone', style: TextStyle(color: Colors.white)),
-                  Text(
-                    emp.phone,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Email', style: TextStyle(color: Colors.white)),
-                  Text(
-                    emp.email,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  Column(
+                    spacing: 12,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Phone', style: TextStyle(color: Colors.white)),
+                          Text(
+                            emp.phone,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Email', style: TextStyle(color: Colors.white)),
+                          Text(
+                            emp.email,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget {
     employeeType: "Full Time",
     joinDate: "February-12-2025",
   );
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
