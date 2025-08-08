@@ -2,7 +2,8 @@ class Employee {
   final String fullName;
   final String position;
   final String department;
-  final String email;
+  final String workEmail;
+  final String personalEmail;
   final String phone;
   final String location;
   final String profilePhoto;
@@ -17,7 +18,8 @@ class Employee {
     required this.fullName,
     required this.position,
     required this.department,
-    required this.email,
+    required this.workEmail,
+    required this.personalEmail,
     required this.phone,
     required this.location,
     required this.profilePhoto,

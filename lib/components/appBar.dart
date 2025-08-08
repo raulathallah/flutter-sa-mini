@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class buildAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  buildAppBar({required this.title});
+  buildAppBar({super.key, required this.title});
 
   String formattedDate = DateFormat(
     'yyyy-MM-dd – kk:mm',

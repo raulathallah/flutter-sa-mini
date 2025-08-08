@@ -5,7 +5,7 @@ class ProfileScreen extends StatelessWidget {
   final black_custom = Colors.black12;
   final Employee emp;
 
-  ProfileScreen({required this.emp});
+  ProfileScreen({super.key, required this.emp});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,11 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 buildProfileHeader(emp),
                 SizedBox(height: 8),
+                buildEmailInfo(emp),
+                Divider(height: 0.1, color: black_custom),
                 buildContactInfo(emp),
                 Divider(height: 0.1, color: black_custom),
                 buildWorkInfo(emp),
-                buildEmployeeInfo(emp),
               ],
             ),
           ),
@@ -70,18 +71,27 @@ Widget buildContactInfo(Employee emp) {
     crossAxisAlignment: CrossAxisAlignment.start,
     spacing: 15,
     children: [
-      Text('Contact', style: TextStyle(fontWeight: FontWeight.bold)),
       Row(
         spacing: 10,
         children: [
           CircleAvatar(
             radius: 14,
             backgroundColor: Colors.blue[50],
-            child: Icon(Icons.phone_outlined, color: Colors.blue, size: 18),
+            child: Icon(Icons.phone, color: Colors.blue, size: 18),
           ),
-          Text(emp.phone, style: TextStyle(fontSize: 14)),
+          Text('Contact', style: TextStyle(fontSize: 14)),
         ],
       ),
+      buildCustomTile('Phone', emp.phone),
+    ],
+  );
+}
+
+Widget buildEmailInfo(Employee emp) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    spacing: 15,
+    children: [
       Row(
         spacing: 10,
         children: [
@@ -90,20 +100,55 @@ Widget buildContactInfo(Employee emp) {
             backgroundColor: Colors.blue[50],
             child: Icon(Icons.email_outlined, color: Colors.blue, size: 18),
           ),
-          Text(emp.email, style: TextStyle(fontSize: 14)),
+          Text('Email', style: TextStyle(fontSize: 14)),
         ],
       ),
+      buildCustomTile('Official', emp.workEmail),
+      buildCustomTile('Personal', emp.personalEmail),
     ],
   );
 }
 
 Widget buildWorkInfo(Employee emp) {
-  return Container(
-    padding: EdgeInsets.all(0),
-    child: Row(children: []),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    spacing: 15,
+    children: [
+      Row(
+        spacing: 10,
+        children: [
+          CircleAvatar(
+            radius: 14,
+            backgroundColor: Colors.blue[50],
+            child: Icon(Icons.work_outline, color: Colors.blue, size: 18),
+          ),
+          Text('Work', style: TextStyle(fontSize: 14)),
+        ],
+      ),
+
+      buildCustomTile('Employee ID', emp.employeeId),
+      buildCustomTile('Employee Type', emp.employeeType),
+      buildCustomTile('Join Date', emp.joinDate),
+      buildCustomTile('Position', emp.position),
+      buildCustomTile('Department', emp.department),
+    ],
   );
 }
 
 Widget buildEmployeeInfo(Employee emp) {
   return Container(padding: EdgeInsets.all(20), child: null);
+}
+
+Widget buildCustomTile(String title, String value) {
+  return Padding(
+    padding: EdgeInsets.only(left: 40),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 10,
+      children: [
+        Text(title, style: TextStyle(fontSize: 12, color: Colors.black45)),
+        Text(value, style: TextStyle(fontSize: 14)),
+      ],
+    ),
+  );
 }

@@ -10,19 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Employee emp = Employee(
-    fullName: 'Dewi Lestari',
-    position: 'Graphic Designer',
-    department: 'Design Department',
-    email: 'dewi.lestari@kreasi.id',
-    phone: '+62 812-3456-7890',
-    nation: 'Indonesia',
-    location: 'Jl. Melati No. 10, Bandung, Jawa Barat',
-    profilePhoto: '',
-    employeeId: "119203",
-    employeeType: "Full Time",
-    joinDate: "February-12-2025",
-  );
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +26,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -49,7 +39,8 @@ class _MainScreenState extends State<MainScreen> {
     fullName: 'Raul Athallah',
     position: 'IT Developer',
     department: 'IT Department',
-    email: 'raulathallah24@gmail.com',
+    workEmail: 'raul.athallah@solecode.id',
+    personalEmail: 'raulathallah24@gmail.com',
     phone: '+62 812-3xxx-7xxx',
     location: 'Jl. Melati No. 10, Bandung, Jawa Barat',
     nation: 'Indonesia',
