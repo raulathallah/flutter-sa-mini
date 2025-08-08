@@ -3,8 +3,15 @@ import 'package:intl/intl.dart';
 
 class buildAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final int? fromIndex;
+  final void Function(int)? onTabChange;
 
-  buildAppBar({super.key, required this.title});
+  buildAppBar({
+    super.key,
+    required this.title,
+    this.fromIndex,
+    required this.onTabChange,
+  });
 
   String formattedDate = DateFormat(
     'yyyy-MM-dd – kk:mm',
@@ -17,25 +24,36 @@ class buildAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back_rounded, color: Colors.black),
-            onPressed: null,
+            icon: Icon(Icons.arrow_back_rounded, color: Colors.white),
+            onPressed: () {
+              if (fromIndex != null) {
+                onTabChange!(fromIndex!);
+              }
+            },
           ),
           Column(
             children: [
-              Text(title, style: TextStyle(fontSize: 14)),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text(
                 formattedDate,
-                style: TextStyle(fontSize: 12, color: Colors.black38),
+                style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ],
           ),
           IconButton(
-            icon: Icon(Icons.settings, color: Colors.black),
+            icon: Icon(Icons.settings, color: Colors.white),
             onPressed: null,
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.blue,
       elevation: 0,
       centerTitle: true,
     );

@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   final Employee emp;
+  final void Function(int)? onTabChange;
 
-  HomeScreen({super.key, required this.emp});
+  HomeScreen({super.key, required this.emp, required this.onTabChange});
 
   String formattedDate = DateFormat(
     'yyyy-MM-dd – kk:mm',
@@ -17,62 +18,68 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(25),
             child: Column(
+              spacing: 15,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //HEADER CARD
-                Card(
-                  elevation: 1,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(14),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Text(
+                          'PeopleTrack Solution',
+                          style: TextStyle(fontSize: 12, color: Colors.blue),
+                        ),
+                        Text(
+                          'Welcome, ${emp.fullName}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                          emp.position,
+                          style: TextStyle(fontSize: 14, color: Colors.black38),
+                        ),
 
+                        Row(
+                          spacing: 10,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              'PeopleTrack Solution',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.blue,
-                              ),
+                            buttonCustom(
+                              'My Attendance',
+                              Icons.date_range_outlined,
+                              () => onTabChange!(1),
                             ),
-                            Text(
-                              'Welcome, ${emp.fullName}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                            Text(
-                              emp.position,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black38,
-                              ),
+                            buttonCustom(
+                              'My Profile',
+                              Icons.person,
+                              () => onTabChange!(2),
                             ),
                           ],
                         ),
-
-                        CircleAvatar(
-                          radius: 38,
-                          backgroundImage: AssetImage(
-                            'assets/images/pp_raul.jpg',
-                          ),
-                        ),
                       ],
                     ),
-                  ),
+
+                    CircleAvatar(
+                      radius: 48,
+                      backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 50),
                 Column(
-                  spacing: 5,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 10,
                   children: [
+                    Icon(
+                      Icons.assignment_turned_in_sharp,
+                      color: Colors.blue,
+                      size: 50,
+                    ),
                     Text(
                       'App Overview',
                       style: TextStyle(
@@ -82,6 +89,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Text(
                       'HR Attendance Tracker is a simple, efficient app that helps HR teams monitor employee attendance, track hours, manage leave, and generate reports. It streamlines timekeeping, improves accuracy, and reduces admin work for businesses of all sizes.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14),
                     ),
                   ],
                 ),
@@ -92,4 +101,26 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buttonCustom(String title, IconData icon, Function? onPressed) {
+  return ElevatedButton.icon(
+    onPressed: () {
+      onPressed!();
+    },
+    icon: Icon(icon),
+    label: Text(title, style: TextStyle(fontSize: 12)),
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5), // Change radius here
+      ),
+      backgroundColor: Colors.blue[50],
+      foregroundColor: Colors.blue,
+      elevation: 0,
+      padding: EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ), // Optional padding
+    ),
+  );
 }

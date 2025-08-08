@@ -34,6 +34,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  int? _fromIndex;
 
   Employee get emp => Employee(
     fullName: 'Raul Athallah',
@@ -51,11 +52,16 @@ class _MainScreenState extends State<MainScreen> {
   );
 
   void _changeTab(int index) {
-    setState(() => _currentIndex = index);
+    if (index != null) {
+      setState(() {
+        _fromIndex = _currentIndex;
+        _currentIndex = index;
+      });
+    }
   }
 
   List<Widget> get _screens => [
-    HomeScreen(emp: emp),
+    HomeScreen(emp: emp, onTabChange: _changeTab),
     AttendanceScreen(emp: emp),
     ProfileScreen(emp: emp),
   ];
@@ -64,7 +70,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(title: _titles[_currentIndex]),
+      appBar: buildAppBar(
+        title: _titles[_currentIndex],
+        fromIndex: _fromIndex,
+        onTabChange: _changeTab,
+      ),
       body: Column(
         children: [
           Expanded(
@@ -81,10 +91,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.black45,
         onTap: _changeTab,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
