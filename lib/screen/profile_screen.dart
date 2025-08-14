@@ -9,11 +9,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(screenWidth * 0.05),
             child: Column(
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,

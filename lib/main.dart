@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:hr_attendance_tracker/components/appBar.dart';
+import 'package:hr_attendance_tracker/widgets/appBar.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
+import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
 import 'package:hr_attendance_tracker/screen/attendance_screen.dart';
 import 'package:hr_attendance_tracker/screen/home_screen.dart';
 import 'package:hr_attendance_tracker/screen/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AttendanceProviders(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +59,10 @@ class _MainScreenState extends State<MainScreen> {
   );
 
   void _changeTab(int index) {
-    if (index != null) {
-      setState(() {
-        _fromIndex = _currentIndex;
-        _currentIndex = index;
-      });
-    }
+    setState(() {
+      _fromIndex = _currentIndex;
+      _currentIndex = index;
+    });
   }
 
   List<Widget> get _screens => [

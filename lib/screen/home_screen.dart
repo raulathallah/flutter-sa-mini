@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_attendance_tracker/models/button.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:intl/intl.dart';
 
@@ -14,11 +15,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(25),
+            padding: EdgeInsets.all(screenWidth * 0.05),
             child: Column(
               spacing: 15,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,15 +52,23 @@ class HomeScreen extends StatelessWidget {
                           spacing: 10,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            buttonCustom(
-                              'My Attendance',
-                              Icons.date_range_outlined,
-                              () => onTabChange!(1),
+                            ElevatedButton.icon(
+                              style: AppButtonStyles.primary,
+                              onPressed: () => onTabChange!(1),
+                              icon: Icon(
+                                Icons.date_range_outlined,
+                                color: Colors.blue,
+                              ), // Your icon
+                              label: Text('Attendance'),
                             ),
-                            buttonCustom(
-                              'My Profile',
-                              Icons.person,
-                              () => onTabChange!(2),
+                            ElevatedButton.icon(
+                              style: AppButtonStyles.primary,
+                              onPressed: () => onTabChange!(2),
+                              icon: Icon(
+                                Icons.person,
+                                color: Colors.blue,
+                              ), // Your icon
+                              label: Text('Profile'),
                             ),
                           ],
                         ),
@@ -110,17 +121,6 @@ Widget buttonCustom(String title, IconData icon, Function? onPressed) {
     },
     icon: Icon(icon),
     label: Text(title, style: TextStyle(fontSize: 12)),
-    style: ElevatedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5), // Change radius here
-      ),
-      backgroundColor: Colors.blue[50],
-      foregroundColor: Colors.blue,
-      elevation: 0,
-      padding: EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ), // Optional padding
-    ),
+    style: AppButtonStyles.primary,
   );
 }
