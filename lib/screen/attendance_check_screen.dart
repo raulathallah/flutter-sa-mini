@@ -15,31 +15,33 @@ class AttendanceCheckScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var attendanceController = context.read<AttendanceProviders>();
-    var attendanceData = attendanceController.getDataByDate(date);
+    final attendanceData = attendanceController.getDataByDate(date);
 
     DateFormat timeFormat = DateFormat('HH:mm');
     var timeNow = timeFormat.format(DateTime.now());
 
     String minutes = '0';
-    double progressValue = attendanceData['progressValue'] ?? 0;
-    int currentProgress = attendanceData['workTime'] ?? 0;
+    double progressValue = attendanceData.progressValue ?? 0;
+    int currentProgress = attendanceData.workTime ?? 0;
 
-    if (attendanceData['checkIn'] != null &&
-        attendanceData['checkOut'] != null) {
-      DateTime checkInTime = timeFormat.parse(attendanceData['checkIn']);
-      DateTime checkOutTime = timeFormat.parse(attendanceData['checkOut']);
+    if (attendanceData.checkIn != null && attendanceData.checkOut != null) {
+      DateTime checkInTime = timeFormat.parse(
+        attendanceData.checkIn.toString(),
+      );
+      DateTime checkOutTime = timeFormat.parse(
+        attendanceData.checkOut.toString(),
+      );
 
       Duration duration = checkOutTime.difference(checkInTime);
       minutes = duration.inMinutes.toString();
     }
 
-    if (attendanceData['checkIn'] != null &&
-        attendanceData['checkIn'] == null) {
+    if (attendanceData.checkIn != null && attendanceData.checkOut == null) {
       int maxWorkMinutes = 8 * 60;
       DateTime now = DateTime.now();
 
       String checkInCombined =
-          '${attendanceData['date']} ${attendanceData['checkIn']}';
+          '${attendanceData.date} ${attendanceData.checkIn}';
 
       DateTime checkInForProgress = DateTime.parse(checkInCombined);
 
@@ -117,7 +119,7 @@ class AttendanceCheckScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 12, color: Colors.black45),
                       ),
                       Text(
-                        toDateString(attendanceData['date']),
+                        toDateString(attendanceData.date),
                         style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                     ],
@@ -139,7 +141,7 @@ class AttendanceCheckScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            attendanceData['checkIn'] ?? '-- : --',
+                            attendanceData.checkIn ?? '-- : --',
                             style: TextStyle(fontSize: 14, color: Colors.black),
                           ),
                         ],
@@ -159,7 +161,7 @@ class AttendanceCheckScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            attendanceData['checkOut'] ?? '-- : --',
+                            attendanceData.checkOut ?? '-- : --',
                             style: TextStyle(fontSize: 14, color: Colors.black),
                           ),
                         ],
@@ -175,10 +177,10 @@ class AttendanceCheckScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: attendanceData['checkIn'] == null
+                    onPressed: attendanceData.checkIn == null
                         ? () {
                             attendanceController.doCheckIn(
-                              attendanceData['date'],
+                              attendanceData.date,
                               timeNow,
                             );
                             Navigator.pop(context);
@@ -197,11 +199,11 @@ class AttendanceCheckScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed:
-                        attendanceData['checkIn'] != null &&
-                            attendanceData['checkOut'] == null
+                        attendanceData.checkIn != null &&
+                            attendanceData.checkOut == null
                         ? () {
                             attendanceController.doCheckOut(
-                              attendanceData['date'],
+                              attendanceData.date,
                               timeNow,
                               currentProgress,
                               progressValue,

@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:hr_attendance_tracker/models/attendance.dart';
 
 class AttendanceProviders extends ChangeNotifier {
-  final List<Map<String, dynamic>> _attendances = [
+  static final List<Map<String, dynamic>> _attendancesRaw = [
     {
       'day': 'Friday',
       'date': '2025-08-01',
@@ -283,36 +284,51 @@ class AttendanceProviders extends ChangeNotifier {
     },
   ];
 
-  void doCheckIn(String date, String checkIn) {
-    int index = _attendances.indexWhere((item) => item['date'] == date);
-    if (index != -1) {
-      _attendances[index]['checkIn'] = checkIn;
-    }
+  List<Attendance> get attendances =>
+      _attendancesRaw.map((e) => Attendance.fromMap(e)).toList();
 
-    notifyListeners();
+  void doCheckIn(String date, String checkIn) {
+    final index = _attendancesRaw.indexWhere((item) => item['date'] == date);
+    if (index != -1) {
+      final updated = Map<String, dynamic>.from(_attendancesRaw[index]);
+      updated['checkIn'] = checkIn;
+      updated['status'] = 'Present';
+      _attendancesRaw[index] = updated;
+      notifyListeners();
+    }
   }
 
   void doCheckOut(
     String date,
     String checkOut,
-    int workProgress,
+    int workTime,
     double progressValue,
   ) {
-    int index = _attendances.indexWhere((item) => item['date'] == date);
+    final index = _attendancesRaw.indexWhere((item) => item['date'] == date);
     if (index != -1) {
-      _attendances[index]['checkOut'] = checkOut;
-      _attendances[index]['status'] = 'Present';
-      _attendances[index]['workTime'] = workProgress;
-      _attendances[index]['progressValue'] = progressValue;
+      final updated = Map<String, dynamic>.from(_attendancesRaw[index]);
+      updated['checkOut'] = checkOut;
+      updated['workTime'] = workTime;
+      updated['progressValue'] = progressValue;
+      _attendancesRaw[index] = updated;
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
-  Map<String, dynamic> getDataByDate(String date) {
-    int index = _attendances.indexWhere((item) => item['date'] == date);
-    return _attendances[index];
-  }
+  Attendance getDataByDate(String date) {
+    final raw = _attendancesRaw.firstWhere(
+      (item) => item['date'] == date,
+      orElse: () => {
+        'day': '',
+        'date': date,
+        'checkIn': null,
+        'checkOut': null,
+        'status': '',
+        'workTime': 0,
+        'progressValue': 0.0,
+      },
+    );
 
-  List<Map<String, dynamic>> get attendances => _attendances;
+    return Attendance.fromMap(raw);
+  }
 }

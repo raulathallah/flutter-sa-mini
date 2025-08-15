@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_attendance_tracker/models/attendance.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
 import 'package:hr_attendance_tracker/screen/attendance_check_screen.dart';
@@ -15,8 +16,6 @@ class AttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final attendanceList = context.watch<AttendanceProviders>().attendances;
-
-    print(context.watch<AttendanceProviders>().getDataByDate('2025-08-14'));
 
     return Scaffold(
       body: SafeArea(
@@ -86,7 +85,7 @@ class AttendanceScreen extends StatelessWidget {
   }
 }
 
-Widget buildListAttendance(List<Map<String, dynamic>> items) {
+Widget buildListAttendance(List<Attendance> items) {
   DateFormat inputFormat = DateFormat('dd-MM-yyyy');
   return ListView.builder(
     itemCount: items.length,
@@ -103,7 +102,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
               Container(
                 width: 3,
                 height: 50, // specify height for vertical line
-                color: items[index]['status'] == 'Present'
+                color: items[index].status == 'Present'
                     ? Colors.green[300]
                     : Colors.red[300],
                 margin: EdgeInsets.symmetric(horizontal: 5),
@@ -124,7 +123,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
                           style: TextStyle(fontSize: 12, color: Colors.black45),
                         ),
                         Text(
-                          toDateString(items[index]['date']),
+                          toDateString(items[index].date),
                           style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ],
@@ -146,7 +145,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
                               ),
                             ),
                             Text(
-                              items[index]['checkIn'] ?? '-- : --',
+                              items[index].checkIn ?? '-- : --',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -169,7 +168,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
                               ),
                             ),
                             Text(
-                              items[index]['checkOut'] ?? '-- : --',
+                              items[index].checkOut ?? '-- : --',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -189,7 +188,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
                   DateTime now = DateTime.now();
                   DateTime itemDate = DateFormat(
                     'yyyy-MM-dd',
-                  ).parse(items[index]['date']);
+                  ).parse(items[index].date);
 
                   if (now.year == itemDate.year &&
                       now.month == itemDate.month &&
@@ -198,7 +197,7 @@ Widget buildListAttendance(List<Map<String, dynamic>> items) {
                       context,
                       MaterialPageRoute(
                         builder: (_) =>
-                            AttendanceCheckScreen(date: items[index]['date']),
+                            AttendanceCheckScreen(date: items[index].date),
                       ),
                     );
                   } else {
