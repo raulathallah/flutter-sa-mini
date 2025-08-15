@@ -323,7 +323,7 @@ class AttendanceProviders extends ChangeNotifier {
     final index = _attendances.indexWhere((item) => item.date == nowDate);
     _attendances[index].workTime = workTime;
     _attendances[index].progressValue = progressValue;
-    _attendances[index].checkOut = nowTime;
+    _attendances[index].checkOut = DateFormat('HH:mm').format(DateTime.now());
     _attendances[index].status = 'Present';
 
     notifyListeners();

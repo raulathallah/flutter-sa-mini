@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/attendance.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
-import 'package:hr_attendance_tracker/screen/attendance_check_screen.dart';
-import 'package:hr_attendance_tracker/widgets/custom_notifications.dart';
 import 'package:hr_attendance_tracker/widgets/date_custom.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,62 +18,14 @@ class AttendanceScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //CHILDREN
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 25,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      print('MONTH CLICKED!');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding: EdgeInsets.all(8),
-                    ),
-                    child: Column(
-                      children: [
-                        Text('Month'),
-                        Text(
-                          '08',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  ElevatedButton(
-                    onPressed: () {
-                      print('YEAR CLICKED!');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding: EdgeInsets.all(8),
-                    ),
-                    child: Column(
-                      children: [
-                        Text('Year'),
-                        Text(
-                          '2025',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              Text('Attendance History', textAlign: TextAlign.center),
               Expanded(child: buildListAttendance(attendanceList)),
             ],
           ),
