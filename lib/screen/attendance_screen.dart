@@ -96,44 +96,40 @@ Widget buildListAttendance(List<Attendance> items) {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 24,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 3,
-                height: 50, // specify height for vertical line
-                color: items[index].status == 'Present'
-                    ? Colors.green[300]
-                    : Colors.red[300],
+                height: 75, // specify height for vertical line
+
+                color: getAttendanceColor(items[index].status),
                 margin: EdgeInsets.symmetric(horizontal: 5),
               ),
 
               Column(
-                spacing: 12,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 12,
                 children: [
-                  SizedBox(
-                    width: 120,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Date',
-                          style: TextStyle(fontSize: 12, color: Colors.black45),
-                        ),
-                        Text(
-                          toDateString(items[index].date),
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Date',
+                        style: TextStyle(fontSize: 12, color: Colors.black45),
+                      ),
+                      Text(
+                        toDateString(items[index].date),
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                      ),
+                    ],
                   ),
-
                   Row(
+                    spacing: 24,
                     children: [
                       SizedBox(
-                        width: 70,
+                        width: 50,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -147,16 +143,16 @@ Widget buildListAttendance(List<Attendance> items) {
                             Text(
                               items[index].checkIn ?? '-- : --',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       SizedBox(
-                        width: 70,
+                        width: 50,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -170,8 +166,32 @@ Widget buildListAttendance(List<Attendance> items) {
                             Text(
                               items[index].checkOut ?? '-- : --',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 70,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Work Time',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black45,
+                              ),
+                            ),
+                            Text(
+                              '${items[index].workTime.toString()} minutes',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -182,35 +202,41 @@ Widget buildListAttendance(List<Attendance> items) {
                 ],
               ),
 
-              IconButton(
-                icon: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
-                onPressed: () {
-                  DateTime now = DateTime.now();
-                  DateTime itemDate = DateFormat(
-                    'yyyy-MM-dd',
-                  ).parse(items[index].date);
+              // IconButton(
+              //   icon: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+              //   onPressed: () {
+              //     DateTime now = DateTime.now();
+              //     DateTime itemDate = DateFormat(
+              //       'yyyy-MM-dd',
+              //     ).parse(items[index].date);
 
-                  if (now.year == itemDate.year &&
-                      now.month == itemDate.month &&
-                      now.day == itemDate.day) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            AttendanceCheckScreen(date: items[index].date),
-                      ),
-                    );
-                  } else {
-                    showNotificationToast(
-                      'Oops! This attendance is not for today.',
-                    );
-                  }
-                },
-              ),
+              //     if (now.year == itemDate.year &&
+              //         now.month == itemDate.month &&
+              //         now.day == itemDate.day) {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (_) =>
+              //               AttendanceCheckScreen(date: items[index].date),
+              //         ),
+              //       );
+              //     } else {
+              //       showNotificationToast(
+              //         'Oops! This attendance is not for today.',
+              //       );
+              //     }
+              //   },
+              // ),
             ],
           ),
         ),
       );
     },
   );
+}
+
+Color? getAttendanceColor(String status) {
+  if (status == 'Present') return Colors.green[300];
+  if (status == 'In Progress') return Colors.blue;
+  return Colors.red;
 }

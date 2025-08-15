@@ -14,7 +14,7 @@ class buildAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   String formattedDate = DateFormat(
-    'yyyy-MM-dd – kk:mm',
+    'd MMMM, yyyy – kk:mm',
   ).format(DateTime.now());
 
   @override

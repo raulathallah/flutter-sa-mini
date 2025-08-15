@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hr_attendance_tracker/models/button.dart';
 import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
 import 'package:hr_attendance_tracker/widgets/custom_notifications.dart';
@@ -96,8 +95,7 @@ class AttendanceCheckScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 LinearProgressIndicator(
-                  value:
-                      progressValue, // value between 0.0 and 1.0 (null = indeterminate)
+                  value: progressValue, // value between 0.0 and 1.0
                   backgroundColor: Colors.grey[300],
                   color: Colors.blue,
                 ),
@@ -179,10 +177,7 @@ class AttendanceCheckScreen extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: attendanceData.checkIn == null
                         ? () {
-                            attendanceController.doCheckIn(
-                              attendanceData.date,
-                              timeNow,
-                            );
+                            attendanceController.doCheckIn();
                             Navigator.pop(context);
                             showNotificationSnackBar(
                               context,
@@ -203,8 +198,6 @@ class AttendanceCheckScreen extends StatelessWidget {
                             attendanceData.checkOut == null
                         ? () {
                             attendanceController.doCheckOut(
-                              attendanceData.date,
-                              timeNow,
                               currentProgress,
                               progressValue,
                             );

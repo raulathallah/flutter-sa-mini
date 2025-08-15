@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/button.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
+import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
+import 'package:hr_attendance_tracker/widgets/custom_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   final Employee emp;
@@ -13,9 +16,34 @@ class HomeScreen extends StatelessWidget {
     'yyyy-MM-dd – kk:mm',
   ).format(DateTime.now());
 
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  DateFormat timeFormat = DateFormat('HH:mm');
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
+    var attendanceController = context.read<AttendanceProviders>();
+
+    final attendanceData = attendanceController.getAttendanceData();
+
+    double progressValue = 0;
+    int currentProgress = 0;
+
+    if (attendanceData.checkIn != null && attendanceData.checkOut == null) {
+      int maxWorkMinutes = 8 * 60;
+      DateTime now = DateTime.now();
+
+      String checkInCombined =
+          '${attendanceData.date} ${attendanceData.checkIn}';
+      DateFormat format = DateFormat("yyyy-MM-dd HH:mm");
+      DateTime checkInForProgress = format.parse(checkInCombined);
+
+      currentProgress = now.difference(checkInForProgress).inMinutes;
+      currentProgress = currentProgress.clamp(0, maxWorkMinutes).toInt();
+
+      progressValue = currentProgress / maxWorkMinutes;
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -78,6 +106,144 @@ class HomeScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 48,
                       backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+                    ),
+                  ],
+                ),
+
+                attendanceData.checkIn != null
+                    ? Column(
+                        spacing: 12,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 12,
+                            children: [
+                              Text(
+                                "Today's work",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              Text(
+                                '$currentProgress minutes',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              LinearProgressIndicator(
+                                value:
+                                    progressValue, // value between 0.0 and 1.0
+                                backgroundColor: Colors.grey[300],
+                                color: Colors.blue,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            spacing: 12,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 70,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'In',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        Text(
+                                          attendanceData.checkIn ?? '-- : --',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    width: 70,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Out',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        Text(
+                                          attendanceData.checkOut ?? '-- : --',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : SizedBox.shrink(),
+
+                Row(
+                  spacing: 12,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: attendanceData.checkIn == null
+                            ? () {
+                                attendanceController.doCheckIn();
+                                onTabChange!(1);
+                                showNotificationSnackBar(
+                                  context,
+                                  "Check In Successful!",
+                                );
+                              }
+                            : null,
+
+                        style: AppButtonStyles.secondary,
+                        icon: Icon(Icons.arrow_downward, size: 24),
+                        label: Text('Check In'),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed:
+                            attendanceData.checkIn != null &&
+                                attendanceData.checkOut == null
+                            ? () {
+                                attendanceController.doCheckOut(
+                                  currentProgress,
+                                  progressValue,
+                                );
+                                onTabChange!(1);
+                                showNotificationSnackBar(
+                                  context,
+                                  "Check Out Successful!",
+                                );
+                              }
+                            : null,
+                        icon: Icon(Icons.arrow_upward, size: 24),
+                        style: AppButtonStyles.secondary,
+                        label: Text('Check Out'),
+                      ),
                     ),
                   ],
                 ),
