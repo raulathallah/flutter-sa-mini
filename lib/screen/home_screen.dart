@@ -30,7 +30,6 @@ class HomeScreen extends StatelessWidget {
     double progressValue = attendanceData.progressValue != 0
         ? attendanceData.progressValue
         : 0;
-    ;
 
     int currentProgress = attendanceData.workTime != 0
         ? attendanceData.workTime

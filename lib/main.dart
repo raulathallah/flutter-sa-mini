@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hr_attendance_tracker/providers/form_profile_providers.dart';
+import 'package:hr_attendance_tracker/providers/profile_providers.dart';
 import 'package:hr_attendance_tracker/widgets/appBar.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:hr_attendance_tracker/providers/attendance_providers.dart';
@@ -9,8 +11,12 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AttendanceProviders(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AttendanceProviders()),
+        ChangeNotifierProvider(create: (_) => ProfileProviders()),
+        ChangeNotifierProvider(create: (_) => FormProfileProviders()),
+      ],
       child: MyApp(),
     ),
   );
@@ -43,21 +49,6 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   int? _fromIndex;
 
-  Employee get emp => Employee(
-    fullName: 'Raul Athallah',
-    position: 'IT Developer',
-    department: 'IT Department',
-    workEmail: 'raul.athallah@solecode.id',
-    personalEmail: 'raulathallah24@gmail.com',
-    phone: '+62 812-3xxx-7xxx',
-    location: 'Jl. Melati No. 10, Bandung, Jawa Barat',
-    nation: 'Indonesia',
-    joinDate: '02 July 2021',
-    employeeId: '11230',
-    employeeType: 'Full Time',
-    profilePhoto: '',
-  );
-
   void _changeTab(int index) {
     setState(() {
       _fromIndex = _currentIndex;
@@ -65,15 +56,16 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  List<Widget> get _screens => [
-    HomeScreen(emp: emp, onTabChange: _changeTab),
-    AttendanceScreen(emp: emp),
-    ProfileScreen(emp: emp),
-  ];
-  final List<String> _titles = ['Home', 'Attendance', 'Profile'];
-
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<ProfileProviders>().user;
+    List<Widget> _screens = [
+      HomeScreen(emp: user, onTabChange: _changeTab),
+      AttendanceScreen(emp: user),
+      ProfileScreen(emp: user),
+    ];
+    final List<String> _titles = ['Home', 'Attendance', 'Profile'];
+
     return Scaffold(
       appBar: buildAppBar(
         title: _titles[_currentIndex],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
+import 'package:hr_attendance_tracker/screen/profile_update_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final black_custom = Colors.black12;
@@ -19,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildProfileHeader(emp),
+                buildProfileHeader(context, emp),
                 SizedBox(height: 8),
                 buildEmailInfo(emp),
                 Divider(height: 0.1, color: black_custom),
@@ -35,16 +36,16 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-Widget buildProfileHeader(Employee emp) {
+Widget buildProfileHeader(BuildContext context, Employee emp) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
-        spacing: 20,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircleAvatar(
-            radius: 50,
+            radius: 40,
             backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
           ),
           Column(
@@ -60,6 +61,16 @@ Widget buildProfileHeader(Employee emp) {
                 children: [Text(emp.nation, style: TextStyle(fontSize: 12))],
               ),
             ],
+          ),
+
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ProfileUpdateScreen()),
+              );
+            },
           ),
         ],
       ),
