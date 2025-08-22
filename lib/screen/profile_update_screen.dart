@@ -52,12 +52,12 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         profileProvider.user.personalEmail;
     formProvider.phoneController.text = profileProvider.user.phone;
     formProvider.locationController.text = profileProvider.user.location;
-
     formProvider.nationController.text = profileProvider.user.nation;
     formProvider.employeeIdController.text = profileProvider.user.employeeId;
     formProvider.employeeTypeController.text =
         profileProvider.user.employeeType;
     formProvider.setDepartment(profileProvider.user.department);
+    formProvider.setProfilePhoto(profileProvider.user.profilePhoto);
   }
 
   @override

@@ -24,49 +24,4 @@ class ProfileProviders extends ChangeNotifier {
     notifyListeners();
     return Future.value();
   }
-
-  // void updateFullName(String value) {
-  //   _user.fullName = value;
-  //   notifyListeners();
-  // }
-
-  // void updatePosition(String value) {
-  //   _user.position = value;
-  //   notifyListeners();
-  // }
-
-  // void updateDepartment(String value) {
-  //   _user.department = value;
-  //   notifyListeners();
-  // }
-
-  // void updateWorkEmail(String value) {
-  //   _user.workEmail = value;
-  //   notifyListeners();
-  // }
-
-  // void updatePersonalEmail(String value) {
-  //   _user.personalEmail = value;
-  //   notifyListeners();
-  // }
-
-  // void updatePhone(String value) {
-  //   _user.phone = value;
-  //   notifyListeners();
-  // }
-
-  // void updateLocation(String value) {
-  //   _user.location = value;
-  //   notifyListeners();
-  // }
-
-  // void updateNation(String value) {
-  //   _user.nation = value;
-  //   notifyListeners();
-  // }
-
-  // void updateProfilePhoto(String value) {
-  //   _user.profilePhoto = value;
-  //   notifyListeners();
-  // }
 }

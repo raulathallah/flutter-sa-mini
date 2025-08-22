@@ -48,10 +48,6 @@ Widget buildProfileHeader(BuildContext context, Employee emp) {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // CircleAvatar(
-          //   radius: 40,
-          //   backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
-          // ),
           CircleAvatar(
             radius: 40,
             backgroundImage: FileImage(
