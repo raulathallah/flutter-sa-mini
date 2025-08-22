@@ -14,7 +14,6 @@ class FormProfileProviders with ChangeNotifier {
   final personalEmailController = TextEditingController();
   final phoneController = TextEditingController();
   final locationController = TextEditingController();
-  final profilePhotoController = TextEditingController();
   final nationController = TextEditingController();
   final employeeIdController = TextEditingController();
   final employeeTypeController = TextEditingController();
@@ -54,7 +53,7 @@ class FormProfileProviders with ChangeNotifier {
     notifyListeners();
   }
 
-  void setProfilePhoto(String value) {
+  void setProfilePhoto(String? value) {
     formData.profilePhoto = value;
     notifyListeners();
   }
@@ -90,7 +89,6 @@ class FormProfileProviders with ChangeNotifier {
     formData.personalEmail = personalEmailController.text;
     formData.phone = phoneController.text;
     formData.location = locationController.text;
-    formData.profilePhoto = profilePhotoController.text;
     formData.nation = nationController.text;
     formData.employeeId = employeeIdController.text;
     formData.employeeType = employeeTypeController.text;
@@ -105,7 +103,6 @@ class FormProfileProviders with ChangeNotifier {
     personalEmailController.clear();
     phoneController.clear();
     locationController.clear();
-    profilePhotoController.clear();
     nationController.clear();
     employeeIdController.clear();
     employeeTypeController.clear();

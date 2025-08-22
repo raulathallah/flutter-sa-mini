@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:hr_attendance_tracker/screen/profile_update_screen.dart';
@@ -46,10 +48,17 @@ Widget buildProfileHeader(BuildContext context, Employee emp) {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // CircleAvatar(
+          //   radius: 40,
+          //   backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+          // ),
           CircleAvatar(
             radius: 40,
-            backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+            backgroundImage: FileImage(
+              File(emp.profilePhoto!), // Make sure it's not null or empty
+            ),
           ),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,

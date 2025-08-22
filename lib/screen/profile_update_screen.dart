@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
 import 'package:hr_attendance_tracker/providers/form_profile_providers.dart';
 import 'package:hr_attendance_tracker/providers/profile_providers.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +15,22 @@ class ProfileUpdateScreen extends StatefulWidget {
 
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   bool isLoading = false;
+  File? _image;
+  final picker = ImagePicker();
+
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final formProviderTemp = Provider.of<FormProfileProviders>(
+        context,
+        listen: false,
+      );
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      formProviderTemp.setProfilePhoto(pickedFile.path);
+    }
+  }
 
   @override
   void initState() {
@@ -33,8 +52,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         profileProvider.user.personalEmail;
     formProvider.phoneController.text = profileProvider.user.phone;
     formProvider.locationController.text = profileProvider.user.location;
-    formProvider.profilePhotoController.text =
-        profileProvider.user.profilePhoto;
+
     formProvider.nationController.text = profileProvider.user.nation;
     formProvider.employeeIdController.text = profileProvider.user.employeeId;
     formProvider.employeeTypeController.text =
@@ -72,8 +90,42 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 child: Form(
                   key: formProvider.formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 24,
                     children: [
+                      //IMAGE
+                      Column(
+                        spacing: 6,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _image != null
+                              ? Image.file(_image!, height: 140)
+                              : Text("No image selected"),
+
+                          ElevatedButton.icon(
+                            icon: Icon(Icons.image),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                            ),
+                            onPressed: () {
+                              pickImage();
+                            },
+                            label: Text("Change profile picture"),
+                          ),
+                        ],
+                      ),
+
                       //FULL NAME
                       TextFormField(
                         controller: formProvider.fullNameController,

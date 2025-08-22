@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hr_attendance_tracker/models/button.dart';
 import 'package:hr_attendance_tracker/models/employee.dart';
@@ -108,9 +110,17 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
 
+                    // CircleAvatar(
+                    //   radius: 48,
+                    //   backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+                    // ),
                     CircleAvatar(
                       radius: 48,
-                      backgroundImage: AssetImage('assets/images/pp_raul.jpg'),
+                      backgroundImage: FileImage(
+                        File(
+                          emp.profilePhoto!,
+                        ), // Make sure it's not null or empty
+                      ),
                     ),
                   ],
                 ),

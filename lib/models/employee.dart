@@ -6,7 +6,7 @@ class Employee {
   String personalEmail;
   String phone;
   String location;
-  String profilePhoto;
+  String? profilePhoto;
 
   //tambahan
   String nation;
@@ -22,7 +22,7 @@ class Employee {
     this.personalEmail = '',
     this.phone = '',
     this.location = '',
-    this.profilePhoto = '',
+    this.profilePhoto,
     this.nation = '',
     this.joinDate = '',
     this.employeeId = '',
