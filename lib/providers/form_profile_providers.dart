@@ -10,13 +10,14 @@ class FormProfileProviders with ChangeNotifier {
   // Controllers
   final fullNameController = TextEditingController();
   final positionController = TextEditingController();
-  final departmentController = TextEditingController();
   final workEmailController = TextEditingController();
   final personalEmailController = TextEditingController();
   final phoneController = TextEditingController();
   final locationController = TextEditingController();
   final profilePhotoController = TextEditingController();
   final nationController = TextEditingController();
+  final employeeIdController = TextEditingController();
+  final employeeTypeController = TextEditingController();
 
   void setFullName(String value) {
     formData.fullName = value;
@@ -63,6 +64,21 @@ class FormProfileProviders with ChangeNotifier {
     notifyListeners();
   }
 
+  void setEmployeeId(String value) {
+    formData.employeeId = value;
+    notifyListeners();
+  }
+
+  void setEmployeeType(String value) {
+    formData.employeeType = value;
+    notifyListeners();
+  }
+
+  void setJoinDate(String value) {
+    formData.joinDate = value;
+    notifyListeners();
+  }
+
   bool validateForm() {
     return formKey.currentState!.validate();
   }
@@ -70,26 +86,29 @@ class FormProfileProviders with ChangeNotifier {
   void saveForm() {
     formData.fullName = fullNameController.text;
     formData.position = positionController.text;
-    formData.department = departmentController.text;
     formData.workEmail = workEmailController.text;
     formData.personalEmail = personalEmailController.text;
     formData.phone = phoneController.text;
     formData.location = locationController.text;
     formData.profilePhoto = profilePhotoController.text;
     formData.nation = nationController.text;
+    formData.employeeId = employeeIdController.text;
+    formData.employeeType = employeeTypeController.text;
+    notifyListeners();
   }
 
   void resetForm() {
     formData = Employee();
     fullNameController.clear();
     positionController.clear();
-    departmentController.clear();
     workEmailController.clear();
     personalEmailController.clear();
     phoneController.clear();
     locationController.clear();
     profilePhotoController.clear();
     nationController.clear();
+    employeeIdController.clear();
+    employeeTypeController.clear();
     notifyListeners();
   }
 }

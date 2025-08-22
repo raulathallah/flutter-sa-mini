@@ -27,6 +27,8 @@ class ProfileScreen extends StatelessWidget {
                 buildContactInfo(emp),
                 Divider(height: 0.1, color: black_custom),
                 buildWorkInfo(emp),
+                Divider(height: 0.1, color: black_custom),
+                buildEmployeeInfo(emp),
               ],
             ),
           ),
@@ -140,7 +142,7 @@ Widget buildWorkInfo(Employee emp) {
 
       buildCustomTile('Employee ID', emp.employeeId),
       buildCustomTile('Employee Type', emp.employeeType),
-      buildCustomTile('Join Date', emp.joinDate),
+      //buildCustomTile('Join Date', emp.joinDate),
       buildCustomTile('Position', emp.position),
       buildCustomTile('Department', emp.department),
     ],
@@ -148,7 +150,25 @@ Widget buildWorkInfo(Employee emp) {
 }
 
 Widget buildEmployeeInfo(Employee emp) {
-  return Container(padding: EdgeInsets.all(20), child: null);
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    spacing: 15,
+    children: [
+      Row(
+        spacing: 10,
+        children: [
+          CircleAvatar(
+            radius: 14,
+            backgroundColor: Colors.blue[50],
+            child: Icon(Icons.location_on_sharp, color: Colors.blue, size: 18),
+          ),
+          Text('Location', style: TextStyle(fontSize: 14)),
+        ],
+      ),
+
+      buildCustomTile('Home', emp.location),
+    ],
+  );
 }
 
 Widget buildCustomTile(String title, String value) {

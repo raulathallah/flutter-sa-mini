@@ -58,12 +58,13 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<ProfileProviders>().user;
+    final user = Provider.of<ProfileProviders>(context).user;
     List<Widget> _screens = [
       HomeScreen(emp: user, onTabChange: _changeTab),
       AttendanceScreen(emp: user),
       ProfileScreen(emp: user),
     ];
+
     final List<String> _titles = ['Home', 'Attendance', 'Profile'];
 
     return Scaffold(
